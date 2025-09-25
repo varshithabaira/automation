@@ -1,0 +1,182 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "1EergEXs9NwSAmvUlqfdgR8NJ5lP9wXKRnzLfHUMhyTY",
+          "mode": "list",
+          "cachedResultName": "feeb back ",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1EergEXs9NwSAmvUlqfdgR8NJ5lP9wXKRnzLfHUMhyTY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 160010292,
+          "mode": "list",
+          "cachedResultName": "Form Responses 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1EergEXs9NwSAmvUlqfdgR8NJ5lP9wXKRnzLfHUMhyTY/edit#gid=160010292"
+        },
+        "event": "rowAdded",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        -288,
+        -64
+      ],
+      "id": "54bb9677-75ad-42df-bd05-de3253b2e7e2",
+      "name": "Google Sheets Trigger",
+      "credentials": {
+        "googleSheetsTriggerOAuth2Api": {
+          "id": "75btsaDNOtEcZ0ca",
+          "name": "Google Sheets Trigger account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "inputText": "={{ $json.review }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.sentimentAnalysis",
+      "typeVersion": 1.1,
+      "position": [
+        -128,
+        -80
+      ],
+      "id": "881790a5-07c6-493e-9da6-96f1c17e1c23",
+      "name": "Sentiment Analysis"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -128,
+        176
+      ],
+      "id": "3835ddeb-5587-497c-8350-50ecfdd8cc28",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "UqA11mTOyXj02k1J",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "varshithabaira10@gmail.com",
+        "subject": "hii",
+        "emailType": "text",
+        "message": "hello",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        240,
+        -112
+      ],
+      "id": "9efbe015-b9d0-46c5-b112-3db253062eb8",
+      "name": "Send a message",
+      "webhookId": "31960558-98aa-4c7d-a2dc-ce75e46d990e",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "vu8QyRREYrMOGqwE",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "varshithabaira10@gmail.com",
+        "subject": "hii",
+        "emailType": "text",
+        "message": "hello",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        240,
+        48
+      ],
+      "id": "781a7936-2fba-4875-b8fd-96c7425badc2",
+      "name": "Send a message1",
+      "webhookId": "31960558-98aa-4c7d-a2dc-ce75e46d990e",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "vu8QyRREYrMOGqwE",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Sheets Trigger": {
+      "main": [
+        [
+          {
+            "node": "Sentiment Analysis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Sentiment Analysis",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sentiment Analysis": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [],
+        [
+          {
+            "node": "Send a message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "440aad8c-003e-4ab6-8428-879cf62cca25",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "dd5a31dde5a87bc051ecc5ca8d7d963b1a0d3f2d0597f31b38d9923ec1ec6881"
+  },
+  "id": "r4T3OECt2nI6Fgy5",
+  "tags": []
+}
